@@ -1,0 +1,326 @@
+[
+ ;; kuhut partition
+ {:db/ident              :db.part/kuhut
+  :db.install/_partition :db.part/db}
+
+ ;; log partition
+ {:db/ident              :db.part/log
+  :db.install/_partition :db.part/db}
+
+ ;; user
+ {:db/ident       :user/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "user time"}
+ {:db/ident       :user/focus
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "user focus (concept)"}
+ ;;; member
+ {:db/ident       :member/e-mail
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/unique      :db.unique/value
+  :db/doc         "member e-mail"}
+ {:db/ident       :member/password
+  :db/valueType   :db.type/bytes
+  :db/cardinality :db.cardinality/one
+  :db/doc         "member password, hashed"}
+ {:db/ident       :member/first-name
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "member first name"}
+ {:db/ident       :member/last-name
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "member last name"}
+ {:db/ident       :member/roles
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc         "member roles"}
+ {:db/ident       :member/interests
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc         "member interests (concepts)"}
+ {:db/ident       :member/lock
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/isComponent true
+  :db/doc         "member lock"}
+ {:db/ident       :member/visitor
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "member visitor"}
+ ;;; member role
+ {:db/ident :member.role/teacher}
+
+ ;; concept
+ {:db/ident       :concept/id
+  :db/valueType   :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique      :db.unique/value
+  :db/doc         "a unique concept ID"}
+ {:db/ident       :concept/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "concept time"}
+ {:db/ident       :concept/name
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/index       true
+  :db/doc         "concept name"}
+ {:db/ident       :concept/description
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "concept description"}
+ {:db/ident       :concept/cost
+  :db/valueType   :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/doc         "concept cost (GBP)"}
+ {:db/ident       :concept/tags
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/many
+  :db/doc         "concept tags"}
+ {:db/ident       :concept/components
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/isComponent true
+  :db/doc         "concept components"}
+ {:db/ident       :concept/weight
+  :db/valueType   :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "concept weight"}
+ {:db/ident       :concept/recommendations
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/isComponent true
+  :db/doc         "concept recommendations"}
+ {:db/ident       :concept/popularity
+  :db/valueType   :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "concept popularity"}
+
+ ;; template
+ {:db/ident       :template/id
+  :db/valueType   :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique      :db.unique/value
+  :db/doc         "a unique template ID"}
+ {:db/ident       :template/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "template time"}
+ {:db/ident       :template/content
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "template content"}
+ {:db/ident       :template/recommendations
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/isComponent true
+  :db/doc         "template recommendations"}
+
+ ;; link
+ {:db/ident       :link/reference
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "link reference (concept or template)"}
+ {:db/ident       :link/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "link time"}
+ {:db/ident       :link/weight
+  :db/valueType   :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "link weight"}
+
+ ;; relation
+ {:db/ident       :relation/from
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "relation from"}
+ {:db/ident       :relation/to
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "relation to"}
+ {:db/ident       :relation/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "relation time"}
+ {:db/ident       :relation/type
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "relation type"}
+
+ ;; step (in a user's learning journey)
+ {:db/ident       :step/user
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "step user"}
+ {:db/ident       :step/agent
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "step agent"}
+ {:db/ident       :step/template
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "step template"}
+ {:db/ident       :step/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "step time"}
+ {:db/ident       :step/data
+  :db/valueType   :db.type/bytes
+  :db/cardinality :db.cardinality/one
+  :db/doc         "step data"}
+ ;;; step agent
+ {:db/ident :step.agent/kuhut}
+ {:db/ident :step.agent/user}
+
+ ;; exercise
+ {:db/ident       :exercise/user
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "exercise user"}
+ {:db/ident       :exercise/concept
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "exercise concept"}
+ {:db/ident       :exercise/current-step
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "exercise current step"}
+
+ ;; flag (a stale template)
+ {:db/ident       :flag/step
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "flag step"}
+ {:db/ident       :flag/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "flag time"}
+
+ ;; knowledge
+ {:db/ident       :knowledge/user
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "knowledge user"}
+ {:db/ident       :knowledge/reference
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "knowledge reference (concept or template)"}
+ {:db/ident       :knowledge/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "knowledge time"}
+ {:db/ident       :knowledge/level
+  :db/valueType   :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "knowledge level"}
+ {:db/ident       :knowledge/certainty
+  :db/valueType   :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "knowledge certainty"}
+
+ ;; resource
+ {:db/ident       :resource/id
+  :db/valueType   :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique      :db.unique/value
+  :db/doc         "a unique resource ID"}
+ {:db/ident       :resource/type
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "resource type"}
+ {:db/ident       :resource/description
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "resource description"}
+ {:db/ident       :resource/content
+  :db/valueType   :db.type/bytes
+  :db/cardinality :db.cardinality/one
+  :db/noHistory   true
+  :db/doc         "resource content"}
+
+ ;; lock
+ {:db/ident       :lock/e-mail
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "lock e-mail"}
+ {:db/ident       :lock/pin
+  :db/valueType   :db.type/bytes
+  :db/cardinality :db.cardinality/one
+  :db/doc         "lock pin"}
+
+ ;; order
+ {:db/ident       :order/id
+  :db/valueType   :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique      :db.unique/value
+  :db/doc         "a unique order ID"}
+ {:db/ident       :order/user
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "order user"}
+ {:db/ident       :order/concept
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "order concept"}
+ {:db/ident       :order/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "order time"}
+ {:db/ident       :order/cost
+  :db/valueType   :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/doc         "order cost"}
+
+ ;; session
+ {:db/ident       :session/key
+  :db/valueType   :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique      :db.unique/value
+  :db/doc         "session key"}
+ {:db/ident       :session/user
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "session user"}
+ {:db/ident       :session/headers
+  :db/valueType   :db.type/bytes
+  :db/cardinality :db.cardinality/one
+  :db/doc         "session headers"}
+ {:db/ident       :session/type
+  :db/valueType   :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc         "session type"}
+ {:db/ident       :session/expiry
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "session expiry"}
+ ;;; session type
+ {:db/ident :session.type/visitor}                          ;; ~7 days
+ {:db/ident :session.type/member}                           ;; until close
+ {:db/ident :session.type/extended}                         ;; ~30 days
+
+ ;; log
+ {:db/ident       :log/time
+  :db/valueType   :db.type/instant
+  :db/cardinality :db.cardinality/one
+  :db/doc         "log time"}
+ {:db/ident       :log/content
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc         "log content"}
+ ]
